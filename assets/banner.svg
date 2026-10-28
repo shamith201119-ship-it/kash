@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-label="Kashyap v3 — real-time crypto and forex intelligence">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#04080C"/>
+      <stop offset="0.55" stop-color="#050A0E"/>
+      <stop offset="1" stop-color="#071016"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00E696" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#00E696" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#00E696" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rise" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#00E696" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#00E696" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="fall" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF4D6D" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#FF4D6D" stop-opacity="0.20"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="380" fill="url(#bg)"/>
+
+  <!-- faint grid -->
+  <g stroke="#0E2430" stroke-width="1" opacity="0.55">
+    <path d="M0 95 H1200 M0 190 H1200 M0 285 H1200"/>
+    <path d="M120 0 V380 M300 0 V380 M480 0 V380 M660 0 V380 M840 0 V380 M1020 0 V380"/>
+  </g>
+
+  <!-- ghost candles right side -->
+  <g opacity="0.8">
+    <!-- green wick + body -->
+    <g fill="#00E696">
+      <rect x="905" y="176" width="14" height="44" rx="3" opacity="0.85"/>
+      <rect x="911" y="160" width="2" height="96" opacity="0.5"/>
+      <rect x="935" y="150" width="14" height="52" rx="3" opacity="0.9"/>
+      <rect x="941" y="132" width="2" height="96" opacity="0.55"/>
+      <rect x="965" y="128" width="14" height="46" rx="3" opacity="0.95"/>
+      <rect x="971" y="112" width="2" height="88" opacity="0.6"/>
+    </g>
+    <!-- red pullback -->
+    <g fill="#FF4D6D">
+      <rect x="995" y="146" width="14" height="40" rx="3" opacity="0.8"/>
+      <rect x="1001" y="126" width="2" height="82" opacity="0.5"/>
+      <rect x="1025" y="152" width="14" height="34" rx="3" opacity="0.75"/>
+      <rect x="1031" y="140" width="2" height="70" opacity="0.45"/>
+    </g>
+    <!-- green break out -->
+    <g fill="#00E696">
+      <rect x="1055" y="128" width="14" height="58" rx="3" opacity="1"/>
+      <rect x="1061" y="104" width="2" height="104" opacity="0.7"/>
+    </g>
+  </g>
+
+  <!-- rising area, left -->
+  <path d="M40 320 L110 296 L180 306 L250 268 L320 280 L390 240 L460 252 L530 210 L600 222 L670 178 L740 190 L810 150 L840 138 L840 380 L40 380 Z" fill="url(#rise)"/>
+  <path d="M40 320 L110 296 L180 306 L250 268 L320 280 L390 240 L460 252 L530 210 L600 222 L670 178 L740 190 L810 150 L840 138" fill="none" stroke="#00E696" stroke-width="2.5" opacity="0.9"/>
+  <circle cx="840" cy="138" r="5" fill="#00E696"/>
+  <circle cx="840" cy="138" r="11" fill="none" stroke="#00E696" stroke-width="1.4" opacity="0.5"/>
+
+  <!-- falling ghost, below right -->
+  <path d="M870 260 L920 240 L970 250 L1020 210 L1070 222 L1120 186 L1160 172" fill="none" stroke="#FF4D6D" stroke-width="1.6" stroke-dasharray="5 6" opacity="0.45"/>
+
+  <!-- top hairline -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#glow)"/>
+
+  <!-- logotype -->
+  <g font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+    <text x="70" y="150" font-size="72" font-weight="800" fill="#EAF6F0" letter-spacing="1">Ka<tspan fill="#00E696">sh</tspan>yap</text>
+    <text x="74" y="188" font-size="17" fill="#7A9E94" letter-spacing="6">REAL-TIME CRYPTO &amp; FOREX INTELLIGENCE</text>
+
+    <g font-family="Consolas, 'SF Mono', Menlo, monospace" font-size="13">
+      <rect x="74" y="226" width="150" height="30" rx="15" fill="none" stroke="#164A38"/>
+      <circle cx="90" cy="241" r="3.5" fill="#00E696"/>
+      <text x="100" y="246" fill="#00E696">BINANCE LIVE</text>
+
+      <rect x="236" y="226" width="158" height="30" rx="15" fill="none" stroke="#164A38"/>
+      <circle cx="252" cy="241" r="3.5" fill="#00E696"/>
+      <text x="262" y="246" fill="#00E696">ZERO API KEYS</text>
+
+      <rect x="406" y="226" width="140" height="30" rx="15" fill="none" stroke="#164A38"/>
+      <circle cx="422" cy="241" r="3.5" fill="#00E696"/>
+      <text x="432" y="246" fill="#00E696">ONE FILE</text>
+    </g>
+  </g>
+
+  <!-- bottom fine line -->
+  <g font-family="Consolas, 'SF Mono', Menlo, monospace" font-size="12.5" fill="#4E6E66">
+    <text x="74" y="330">LIVE CHART ENGINE · KEY LEVELS · BACKTEST · SCREENSHOT ANALYZER</text>
+    <text x="74" y="354">UNIVERSE SCANNER · ENTRY / EXIT PLANS · TIME MACHINE · RISK MANAGER · WATCH ALERTS</text>
+  </g>
+</svg>
