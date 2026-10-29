@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="assets/banner.svg" width="100%" alt="Kashyap v3 — real-time crypto and forex intelligence">
+<img src="assets/banner.svg" width="100%" alt="Kash v3 — real-time crypto and forex intelligence">
 
-# 📈 Kashyap
+# 📈 Kash
 
 **One HTML file. Real wire data. Zero API keys. Zero builds.**
 
@@ -21,9 +21,9 @@ methodology that rehearses before it recommends.*
 
 ---
 
-## 🧭 What is Kashyap?
+## 🧭 What is Kash?
 
-Kashyap is a **single-file trading dashboard** — `kashyap-v3.html` — that runs straight from disk
+Kash is a **single-file trading dashboard** — `kash-v3.html` — that runs straight from disk
 (double-click it) or from any static server. No install, no account, no bundler, no framework,
 no API key signup. It loads **real quotes from Binance's public API** for crypto and a
 **multi-route ladder** (Yahoo → relays → ECB daily → Binance token mirrors) for forex, then runs
@@ -84,19 +84,19 @@ Three views, one nav:
 
 ### ◧ Live Chart — the full engine
 
-<img src="assets/live-chart.png" width="100%" alt="Kashyap live chart view: candle engine, indicators, market signal, key levels, position sizer, backtest, journal">
+<img src="assets/live-chart.png" width="100%" alt="Kash live chart view: candle engine, indicators, market signal, key levels, position sizer, backtest, journal">
 
 *Candle engine with EMA overlays and Fib levels · 7-indicator table · BUY/SELL/WAIT signal with WHY panel · daily pivots + auto-Fibs · position sizer · real-history backtest · paper-trade journal.*
 
 ### ⚡ Day Trader System — scan, plan, rehearse
 
-<img src="assets/day-trader.png" width="100%" alt="Kashyap day trader system: universe scanner results, entry/exit plan with green risk-manager pass, time machine probability bars">
+<img src="assets/day-trader.png" width="100%" alt="Kash day trader system: universe scanner results, entry/exit plan with green risk-manager pass, time machine probability bars">
 
 *Top-44 volume universe scanned for setups → a SHORT plan sized to a $50 max loss, risk manager PASS → the Time Machine replaying 10,000 bootstrapped paths plus 60 historical fires of the same setup.*
 
 ### ▤ Screenshot Analyzer — drop zone
 
-<img src="assets/analyzer.png" width="100%" alt="Kashyap screenshot analyzer drop zone with trading style chips">
+<img src="assets/analyzer.png" width="100%" alt="Kash screenshot analyzer drop zone with trading style chips">
 
 *Any screenshot from any platform, any timeframe — one pass, structured verdict.*
 
@@ -135,13 +135,13 @@ The dashboard would rather show nothing than fake something.
 
 ## 🚀 Quick Start
 
-1. **Download** [`kashyap-v3.html`](kashyap-v3.html)
+1. **Download** [`kash-v3.html`](kash-v3.html)
 2. **Double-click it.** That's the whole setup — it runs from `file://` with the FX speed kit intact.
 3. *(Optional)* serve it locally if you prefer a clean origin:
 
 ```bash
 python -m http.server 8910
-# then open http://127.0.0.1:8910/kashyap-v3.html
+# then open http://127.0.0.1:8910/kash-v3.html
 ```
 
 > **First load?** The scanner and tape pull real wire quotes on demand — give them a few seconds
@@ -151,7 +151,7 @@ python -m http.server 8910
 
 ## 📜 The Fine Print
 
-- **Not financial advice.** Nothing in Kashyap is a recommendation to buy or sell anything.
+- **Not financial advice.** Nothing in Kash is a recommendation to buy or sell anything.
 - **Signals are opinions from past data.** Backtests and the Time Machine replay what *already
   happened* on this tape — a reality check, not a forecast. Past behavior ≠ future results.
 - **Stops are plans, not guarantees.** Gaps, slippage and illiquidity can blow through any level.
@@ -173,6 +173,6 @@ python -m http.server 8910
 
 <div align="center">
 
-**Ka**shyap — *paper plans only · discipline is the edge · not financial advice*
+**Ka**sh — *paper plans only · discipline is the edge · not financial advice*
 
 </div>

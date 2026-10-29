@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#050A0E">
-<title>Kashyap v3.7.0 — Market Intelligence</title>
+<title>Kash v3.7.0 — Market Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -656,7 +656,7 @@
 
 <div id="boot">
   <div class="boot-inner">
-    <div class="boot-logo">KASHYAP</div>
+    <div class="boot-logo">KASH</div>
     <div class="boot-tag">LIVE MARKET INTELLIGENCE</div>
     <div class="boot-bar"><div class="boot-fill" id="bootFill"></div></div>
     <div class="boot-status" id="bootStatus">initializing engine…</div>
@@ -671,7 +671,7 @@
         <circle cx="13" cy="4" r="2" fill="#050A0E"/>
       </svg>
     </div>
-    <span class="logo-name">Ka<b>sh</b>yap</span>
+    <span class="logo-name">Ka<b>sh</b></span>
     <span class="logo-ver">v3.7.0 · LIVE</span>
   </div>
   <button class="nav-tab active" id="tabLive" onclick="switchView('live')">◧ LIVE CHART</button>
@@ -982,7 +982,7 @@
 <div id="toast"></div>
 
 <footer>
-  KASHYAP v3 · <span>Live Binance data · deterministic indicator math · backtested logic · AI vision when asked</span><br>
+  KASH v3 · <span>Live Binance data · deterministic indicator math · backtested logic · AI vision when asked</span><br>
   Signals are opinions from past data — <b>not financial advice · validate on paper trading · educational use only</b>
 </footer>
 
@@ -997,8 +997,21 @@ window.dispatchEvent(new Event('motionfx:ready'));
 
 <script>
 'use strict';
+/* brand rename — one-time silent migration: old kashyap_* localStorage data moves to kash_* and is never lost */
+try {
+  const _mKeys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.indexOf('kashyap') === 0) _mKeys.push(k);
+  }
+  _mKeys.forEach(k => {
+    const nk = 'kash' + k.slice(7);
+    if (localStorage.getItem(nk) === null) localStorage.setItem(nk, localStorage.getItem(k));
+    localStorage.removeItem(k);
+  });
+} catch (e) { /* storage untouched — the app simply starts fresh */ }
 /* ================================================================
-   KASHYAP v3.1 — navbar dashboard
+   KASH v3.1 — navbar dashboard
    VIEW 1  Live Chart : real Binance data engine + MTF + levels + calc
    VIEW 2  Analyzer   : AI vision readout of uploaded screenshots
    ================================================================ */
@@ -1009,11 +1022,11 @@ const TF_HOLD = { '15m': 8, '1h': 6, '4h': 6, '1d': 3 };
 const TF_MS = { '15m': 900000, '1h': 3600000, '4h': 14400000, '1d': 86400000 };
 const WEIGHTS = { rsi: 1, macd: 1.4, stoch: 0.9, bb: 0.8, ema: 1.3, obv: 0.9, adx: 1.1 };
 const LS = {
-  key: 'kashyap_v3_gemini_key',
-  journal: 'kashyap_v3_journal',
-  calc: 'kashyap_v3_calc',
-  anHist: 'kashyap_v3_analyzer_history',
-  aiCount: 'kashyap_v3_ai_count'
+  key: 'kash_v3_gemini_key',
+  journal: 'kash_v3_journal',
+  calc: 'kash_v3_calc',
+  anHist: 'kash_v3_analyzer_history',
+  aiCount: 'kash_v3_ai_count'
 };
 
 /* ---------------- forex venue (Yahoo Finance v8 chart · dual-host fallback) ---------------- */
@@ -1058,7 +1071,7 @@ const FX_RELAYS = [        // last-resort public CORS relays (different domains 
    the app goes back to Yahoo-first automatically. Manual ⟳ always bypasses the express lane. ---- */
 function fxMemoGet() {
   try {
-    const m = JSON.parse(localStorage.getItem('kashyapFxMemo1') || 'null');
+    const m = JSON.parse(localStorage.getItem('kashFxMemo1') || 'null');
     return m && m.at ? m : null;
   } catch (e) { return null; }
 }
@@ -1066,7 +1079,7 @@ function fxMemoSet(patch) {
   try {
     const m = Object.assign({ yd: 0, at: 0 }, fxMemoGet() || {}, patch || {});
     m.at = Date.now();
-    localStorage.setItem('kashyapFxMemo1', JSON.stringify(m));
+    localStorage.setItem('kashFxMemo1', JSON.stringify(m));
   } catch (e) { /* memo is a speed aid, never a requirement */ }
 }
 function fxMemoDead() {
@@ -1812,7 +1825,7 @@ function switchView(v) {
 
 /* ---------------- loaders ---------------- */
 /* ---------------- fx instant cache: repeat pair loads paint instantly, fresh data follows ---------------- */
-const FX_CACHE_KEY = 'kashyapFxC1';                 // localStorage — survives reloads
+const FX_CACHE_KEY = 'kashFxC1';                 // localStorage — survives reloads
 function fxCGet(sym, tf) {
   try {
     const db = JSON.parse(localStorage.getItem(FX_CACHE_KEY) || '{}');
@@ -2537,7 +2550,7 @@ async function aiSummary() {
   const s = state.signal, cs = state.candles;
   const recent = cs.slice(-24).map(c => c.o.toFixed(2) + '/' + c.h.toFixed(2) + '/' + c.l.toFixed(2) + '/' + c.c.toFixed(2) + '/' + Math.round(c.v)).join(' | ');
   const prompt =
-    'You are Kashyap, a disciplined crypto technical analyst. Using ONLY the data provided, write market commentary.\n' +
+    'You are Kash, a disciplined crypto technical analyst. Using ONLY the data provided, write market commentary.\n' +
     'Data (all computed from real ' + (state.venue === 'fx' ? 'Yahoo FX' : 'Binance') + ' ' + state.tf + ' candles of ' + state.symbol + '):\n' +
     'Direction: ' + s.direction + ' · Agreement: ' + s.conf + '% · Regime: ' + (s.regime ? s.regime.r.toUpperCase() : 'n/a') + '\n' +
     'Patterns detected: ' + (s.pat && s.pat.tags.length ? s.pat.tags.map(t => t.k).join(', ') : 'none on the closed bar') + '\n' +
@@ -2583,7 +2596,7 @@ function typeCommentary(tag, body) {
    The analyzer NEVER asks for a key. The user's own key is locked in below —
    new Google format (AQ.…), authenticated via the x-goog-api-key header, so it
    is valid for the modern AI Studio keys AND classic AIza… keys alike. */
-const GEMINI_LOCKED_KEY = "BRING_YOUR_OWN_GEMINI_KEY";   /* locked in — used every time, never asked again */
+const GEMINI_LOCKED_KEY = 'BRING_YOUR_OWN_GEMINI_KEY';   /* locked in — used every time, never asked again */
 function getGeminiKey() { try { return GEMINI_LOCKED_KEY || localStorage.getItem(LS.key) || ''; } catch (e) { return GEMINI_LOCKED_KEY || ''; } }
 function setGeminiKey(k) { try { k ? localStorage.setItem(LS.key, k) : localStorage.removeItem(LS.key); } catch (e) {} }
 function aiCountObj() {
@@ -2737,7 +2750,7 @@ function signalText() {
   if (!s.plan) return '';
   const dir = s.direction === 'BUY' ? 'LONG ▲' : 'SHORT ▼';
   const bt = state.backtest;
-  return '🟡 KASHYAP v3 · ' + displaySymbol(state.symbol) + ' · ' + state.tf.toUpperCase() + '\n' +
+  return '🟡 KASH v3 · ' + displaySymbol(state.symbol) + ' · ' + state.tf.toUpperCase() + '\n' +
     dir + ' @ ' + fmtPrice(s.plan.entry) + '\n' +
     'SL ' + fmtPrice(s.plan.sl) + ' (' + s.plan.slPct.toFixed(2) + '%)\n' +
     'TP ' + fmtPrice(s.plan.tp) + ' (+' + s.plan.tpPct.toFixed(2) + '%)\n' +
@@ -2767,7 +2780,7 @@ async function analyzeImage(mime, b64, fileName) {
     return;
   }
   const prompt =
-    'You are Kashyap, an expert chart technician. Read this trading chart screenshot and extract everything useful for a manual trader. ' +
+    'You are Kash, an expert chart technician. Read this trading chart screenshot and extract everything useful for a manual trader. ' +
     'Use only what is actually visible. ' +
     'Trading style context: ' + (TRADING_STYLES[state.anMode] ? TRADING_STYLES[state.anMode].name + ' (positions held ' + TRADING_STYLES[state.anMode].horizon + ')' : state.anMode.toUpperCase()) + ' — judge the bias, levels and conviction for exactly that horizon. ' +
     'JSON ONLY with keys: ' +
@@ -2855,7 +2868,7 @@ function copyReport() {
   const a = state.anResult;
   if (!a) return;
   const r = a.res;
-  const txt = '📸 KASHYAP ANALYZER · ' + a.name + ' · ' + new Date(a.ts).toLocaleString() + (a.mode ? ' · ' + a.mode.toUpperCase() : '') + '\n' +
+  const txt = '📸 KASH ANALYZER · ' + a.name + ' · ' + new Date(a.ts).toLocaleString() + (a.mode ? ' · ' + a.mode.toUpperCase() : '') + '\n' +
     'Chart: ' + (r.symbol || '(ticker not visible)') + (r.timeframe ? ' · ' + r.timeframe : '') + '\n' +
     'Bias: ' + (r.bias || '—') + ' (' + (r.strength || 0) + '% conviction) · Pattern: ' + (r.pattern || '—') + '\n' +
     'Support: ' + (r.support || []).join(', ') + ' · Resistance: ' + (r.resistance || []).join(', ') + '\n' +
@@ -3072,7 +3085,7 @@ anFile.addEventListener('change', e => {
    scan → plan → rehearse → risk → watch, on this app's own real candle engine.
    Paper plans only: no order is ever placed, the ticket is copied out by hand.
    ============================================================ */
-const DT_LS = 'kashyap_v3_dt';
+const DT_LS = 'kash_v3_dt';
 const dtCfg = { account: 5000, maxLoss: 50, rMult: 1, minRR: 1.5, maxTrades: 3 };
 function dtLoad() { try { Object.assign(dtCfg, JSON.parse(localStorage.getItem(DT_LS) || '{}')); } catch (e) {} }
 function dtSave() { try { localStorage.setItem(DT_LS, JSON.stringify(dtCfg)); } catch (e) {} }
@@ -3300,7 +3313,7 @@ function dtCopyFallback(txt, done) {
 function dtTicket() {
   const p = state.dtPlan; if (!p) return;
   const L = [];
-  L.push('KASHYAP PAPER PLAN · no order was or will be placed by this app');
+  L.push('KASH PAPER PLAN · no order was or will be placed by this app');
   L.push(p.side + ' · ' + displaySymbol(p.sym) + ' · ' + p.tf.toUpperCase() + ' · ' + p.kind);
   L.push('ENTRY ' + fmtPrice(p.entry) + ' · STOP ' + fmtPrice(p.stop) + ' · TARGET ' + fmtPrice(p.target) + ' (' + p.rr.toFixed(2) + 'R)');
   L.push('QTY ' + dtFmtQty(p.qty) + ' · NOTIONAL $' + fmtPrice(p.notional) + ' · MAX LOSS AT STOP $' + fmtPrice(p.riskUsd));
@@ -3421,7 +3434,7 @@ function dtPing(kind, price, w) {
       o.stop(ctx.currentTime + 0.3);
     }
   } catch (e) {}
-  try { if (window.Notification && Notification.permission === 'granted') new Notification('Kashyap · ' + kind + ' hit', { body: msg }); } catch (e) {}
+  try { if (window.Notification && Notification.permission === 'granted') new Notification('Kash · ' + kind + ' hit', { body: msg }); } catch (e) {}
 }
 
 
