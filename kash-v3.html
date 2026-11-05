@@ -651,6 +651,7 @@
     footer { padding: 1.1rem 1rem calc(1.1rem + env(safe-area-inset-bottom)); }
   }
 </style>
+  <link rel="stylesheet" href="kash-pro.css">
 </head>
 <body>
 
@@ -677,6 +678,7 @@
   <button class="nav-tab active" id="tabLive" onclick="switchView('live')">◧ LIVE CHART</button>
   <button class="nav-tab" id="tabAnalyzer" onclick="switchView('analyzer')">▤ SCREENSHOT ANALYZER</button>
   <button class="nav-tab" id="tabTrader" onclick="switchView('trader')">⚡ DAY TRADER</button>
+  <button class="nav-tab" id="tabPro" onclick="switchView('pro')">◈ PRO INTELLIGENCE</button>
   <div class="nav-right">
     <div class="nav-price" id="navPrice" onclick="switchView('live')"><small id="navPair">BTCUSDT</small><span id="navVal">—</span></div>
   </div>
@@ -976,6 +978,108 @@
       </div>
     </div>
   </section>
+
+  <!-- ============ PRO INTELLIGENCE VIEW ============ -->
+  <section class="view" id="viewPro">
+    <div class="kp-wrap">
+      <div class="kp-head">
+        <div><div class="kp-kicker">KASH / PRO INTELLIGENCE</div><div class="kp-title">One market. More context.</div><div class="kp-desc">Cross-exchange discovery, liquidity snapshots and transparent strategy research — alongside your existing Kash signal engine.</div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;align-items:center;max-width:420px">
+          <input id="kpApiBase" aria-label="Kash Pro API URL" placeholder="https://your-kash-api.example.com" style="min-width:190px;max-width:270px;border:1px solid rgba(0,230,150,.2);border-radius:6px;background:#071017;color:#e4fbf1;padding:9px 10px;font:10px 'JetBrains Mono',monospace">
+          <button class="kp-button" id="kpSaveApi" type="button">CONNECT API</button>
+          <div class="kp-status" id="kpStatus">API NOT CONNECTED</div>
+        </div>
+      </div>
+      <div class="kp-tabs">
+        <button class="kp-subtab active" data-kp-pane="markets">MARKET SCANNER</button>
+        <button class="kp-subtab" data-kp-pane="chart">PRO CHART</button>
+        <button class="kp-subtab" data-kp-pane="research">STRATEGY RESEARCH</button>
+        <button class="kp-subtab" data-kp-pane="risk">RISK ANALYTICS</button>
+      </div>
+      <section class="kp-pane active" id="kp-pane-markets">
+        <div class="kp-panel">
+          <div class="kp-panel-head"><span class="kp-panel-title">MULTI-EXCHANGE SPOT SCANNER</span><span class="kp-panel-sub" id="kpScanMeta">PUBLIC DATA · READ ONLY</span></div>
+          <div class="kp-panel-body">
+            <div class="kp-controls">
+              <div class="kp-field"><label>Exchange</label><select id="kpExchange"><option value="binance">BINANCE</option><option value="bybit">BYBIT</option><option value="okx">OKX</option><option value="kucoin">KUCOIN</option><option value="gateio">GATE.IO</option><option value="kraken">KRAKEN</option></select></div>
+              <div class="kp-field"><label>Quote asset</label><select id="kpQuote"><option>USDT</option><option>USDC</option><option>BTC</option><option>USD</option></select></div>
+              <div class="kp-field"><label>Markets</label><select id="kpLimit"><option>20</option><option selected>40</option><option>80</option><option>150</option></select></div>
+              <button class="kp-button" id="kpScan">SCAN MARKETS</button>
+            </div>
+            <div id="kpScanError"></div>
+            <div class="kp-table-wrap" style="margin-top:12px"><table><thead><tr><th>MARKET</th><th>LAST</th><th>24H</th><th>QUOTE VOL.</th><th>BID</th><th>ASK</th><th></th></tr></thead><tbody id="kpMarkets"><tr><td colspan="7" class="kp-muted">Run a scan to load public exchange markets.</td></tr></tbody></table></div>
+          </div>
+        </div>
+        <div class="kp-note">Quote volume is exchange-reported and symbols are not always comparable across venues. This scanner is for market discovery, not a recommendation or a guaranteed arbitrage feed.</div>
+      </section>
+      <section class="kp-pane" id="kp-pane-chart">
+        <div class="kp-panel">
+          <div class="kp-panel-head"><span class="kp-panel-title">EXCHANGE CANDLE & LIQUIDITY VIEW</span><span class="kp-panel-sub" id="kpChartMeta">UTC · OHLCV</span></div>
+          <div class="kp-panel-body">
+            <div class="kp-controls">
+              <div class="kp-field"><label>Symbol</label><input id="kpSymbol" value="BTC/USDT" spellcheck="false"></div>
+              <div class="kp-field"><label>Timeframe</label><select id="kpTimeframe"><option>15m</option><option selected>1h</option><option>4h</option><option>1d</option><option>1w</option></select></div>
+              <button class="kp-button" id="kpLoadChart">LOAD CHART</button>
+            </div>
+            <div id="kpChart" class="kp-chart" style="margin-top:12px"></div>
+            <div class="kp-stats">
+              <div class="kp-stat"><label>LAST CLOSE</label><strong id="kpLast">—</strong></div>
+              <div class="kp-stat"><label>PREV BAR CHANGE</label><strong id="kpBarChange">—</strong></div>
+              <div class="kp-stat"><label>TOP-OF-BOOK SPREAD</label><strong id="kpSpread">—</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="kp-panel" style="margin-top:12px">
+          <div class="kp-panel-head"><span class="kp-panel-title">ORDER BOOK SNAPSHOT</span><span class="kp-panel-sub" id="kpBookMeta">DEPTH SAMPLE · NOT FULL MARKET DEPTH</span></div>
+          <div class="kp-panel-body"><div class="kp-layout" style="grid-template-columns:1fr 1fr;gap:10px"><div><div class="kp-panel-sub" style="margin-bottom:7px">BIDS</div><div id="kpBids" class="kp-list kp-muted">Load a market to view bids.</div></div><div><div class="kp-panel-sub" style="margin-bottom:7px">ASKS</div><div id="kpAsks" class="kp-list kp-muted">Load a market to view asks.</div></div></div></div>
+        </div>
+        <div class="kp-note">Candles and order-book data are public snapshots from the selected exchange. Order-book liquidity can change quickly and a snapshot is not an execution guarantee.</div>
+        <div id="kpChartError"></div>
+      </section>
+      <section class="kp-pane" id="kp-pane-research">
+        <div class="kp-panel">
+          <div class="kp-panel-head"><span class="kp-panel-title">STRATEGY RESEARCH LAB</span><span class="kp-panel-sub">HISTORICAL SIMULATION · NO ORDERS</span></div>
+          <div class="kp-panel-body">
+            <div class="kp-muted">Load a chart first. Signals use the previous closed candle; entries/exits are simulated at the next candle open. Fees and slippage are applied on both sides.</div>
+            <div class="kp-controls" style="margin-top:12px">
+              <div class="kp-field"><label>Strategy</label><select id="kpStrategy"><option value="ema_cross">EMA CROSSOVER</option><option value="rsi_reversion">RSI MEAN REVERSION</option></select></div>
+              <div class="kp-field"><label>Fast EMA / RSI period</label><input id="kpFast" type="number" min="2" max="100" value="12"></div>
+              <div class="kp-field"><label>Slow EMA</label><input id="kpSlow" type="number" min="3" max="250" value="26"></div>
+              <div class="kp-field"><label>RSI entry</label><input id="kpRsiEntry" type="number" min="5" max="45" value="30"></div>
+              <div class="kp-field"><label>RSI exit</label><input id="kpRsiExit" type="number" min="50" max="95" value="60"></div>
+            </div>
+            <div class="kp-controls" style="margin-top:9px">
+              <div class="kp-field"><label>Initial equity</label><input id="kpCapital" type="number" min="100" value="10000"></div>
+              <div class="kp-field"><label>Exposure fraction</label><input id="kpExposure" type="number" min=".05" max="1" step=".05" value=".95"></div>
+              <div class="kp-field"><label>Fee bps / side</label><input id="kpFee" type="number" min="0" max="200" value="10"></div>
+              <div class="kp-field"><label>Slippage bps / side</label><input id="kpSlip" type="number" min="0" max="200" value="5"></div>
+              <button class="kp-button" id="kpRunBacktest">RUN BACKTEST</button>
+            </div>
+            <div id="kpBacktestError"></div>
+            <div id="kpBacktestResults" class="kp-result-grid"></div>
+          </div>
+        </div>
+        <div class="kp-note">A backtest is not evidence of future performance. This starter engine is long-only and does not model intrabar stop/target fills, liquidation, funding accrual, queue priority or partial fills. Validate out of sample and against a benchmark.</div>
+      </section>
+      <section class="kp-pane" id="kp-pane-risk">
+        <div class="kp-panel">
+          <div class="kp-panel-head"><span class="kp-panel-title">PORTFOLIO RISK ANALYTICS</span><span class="kp-panel-sub">PERIODIC RETURNS</span></div>
+          <div class="kp-panel-body">
+            <div class="kp-muted">Paste non-overlapping periodic returns as decimals. Example: 0.01 = +1%, -0.025 = -2.5%.</div>
+            <div class="kp-controls" style="margin-top:12px;align-items:start">
+              <div class="kp-field" style="flex:3"><label>Return series</label><textarea id="kpReturns" rows="6" placeholder="0.012, -0.004, 0.008, -0.015, 0.021"></textarea></div>
+              <div class="kp-field"><label>Periods / year</label><input id="kpPeriods" type="number" min="1" value="365"><label style="margin-top:7px">Starting equity</label><input id="kpRiskCapital" type="number" min="1" value="10000"><button class="kp-button" id="kpRunRisk" style="margin-top:8px">ANALYSE</button><button class="kp-button" id="kpRunMonte" style="margin-top:5px">MONTE CARLO</button></div>
+            </div>
+            <div id="kpRiskError"></div>
+            <div id="kpRiskResults" class="kp-result-grid"></div>
+          </div>
+        </div>
+        <div class="kp-note">Risk statistics are only meaningful when the return frequency and benchmark assumptions are consistent. Bootstrap Monte Carlo resamples past observations; it is a scenario exercise, not a forecast.</div>
+      </section>
+      <div class="kp-muted" style="margin-top:13px">Market feeds supplied by selected exchanges through CCXT. Charting by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer" style="color:#00e696">TradingView Lightweight Charts™</a>. Kash Pro is read-only and contains no live order routing.</div>
+    </div>
+  </section>
+
 </main>
 
 <div class="data-status" id="dataStatus"></div>
@@ -1816,11 +1920,14 @@ function switchView(v) {
   $id('viewLive').classList.toggle('active', v === 'live');
   $id('viewAnalyzer').classList.toggle('active', v === 'analyzer');
   $id('viewTrader').classList.toggle('active', v === 'trader');
+  $id('viewPro').classList.toggle('active', v === 'pro');
   $id('tabLive').classList.toggle('active', v === 'live');
   $id('tabAnalyzer').classList.toggle('active', v === 'analyzer');
   $id('tabTrader').classList.toggle('active', v === 'trader');
+  $id('tabPro').classList.toggle('active', v === 'pro');
   if (v === 'live' && state.ind) setTimeout(renderChart, 60); // canvas needs layout
   if (v === 'trader') dtStatsRefresh();
+  if (v === 'pro' && window.KashPro) window.KashPro.onOpen();
 }
 
 /* ---------------- loaders ---------------- */
@@ -3467,5 +3574,6 @@ function renderCalcInit() {
   $id('calcRisk').value = prefs.risk || '';
 }
 </script>
+  <script src="kash-pro.js" defer></script>
 </body>
 </html>

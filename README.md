@@ -176,3 +176,35 @@ python -m http.server 8910
 **Ka**sh — *paper plans only · discipline is the edge · not financial advice*
 
 </div>
+
+
+---
+
+## ◈ Kash Pro Intelligence (new)
+
+A separate **PRO INTELLIGENCE** view is available alongside the original Live Chart, Screenshot Analyzer and Day Trader views.
+
+| Module | What it adds |
+| --- | --- |
+| **Multi-exchange scanner** | CCXT public spot-market discovery across Binance, Bybit, OKX, KuCoin, Gate.io and Kraken, ranked by exchange-reported quote volume |
+| **Pro chart & liquidity** | TradingView Lightweight Charts 5.2.1, exchange OHLCV candles, bid/ask spread and order-book snapshots |
+| **Strategy research** | EMA crossover and RSI mean-reversion historical simulations with next-bar-open fills, fees and slippage |
+| **Risk analytics** | Periodic-return metrics and bootstrap Monte Carlo outcome distributions |
+| **Separate read-only API** | Python FastAPI service; no exchange credentials, wallet access or order-placement endpoints |
+
+### Run the Pro API locally
+
+```bash
+cd backend
+python -m venv .venv
+# Windows PowerShell: .venv\\Scripts\\Activate.ps1
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app:app --reload --host 127.0.0.1 --port 8000
+```
+
+Then deploy `kash-v3.html`, `kash-pro.css` and `kash-pro.js` together. Open **PRO INTELLIGENCE**, enter your deployed API HTTPS URL in the API box, and select **CONNECT API**. The original three views and the original chart engine remain in place.
+
+See [KASH-PRO-INTEGRATION.md](KASH-PRO-INTEGRATION.md) for deployment and security notes.
+
+**Research-only:** no live trading is implemented. Historical simulations do not forecast future performance. Add server-side authentication, request quotas, rate limiting, caching and monitoring before opening the API to general public traffic.
