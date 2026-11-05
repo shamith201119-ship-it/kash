@@ -94,7 +94,7 @@ function runMonte(){
   $('kpRiskResults').innerHTML=metric('5TH PERCENTILE',fmt(p['5'],2))+metric('MEDIAN OUTCOME',fmt(p['50'],2))+metric('95TH PERCENTILE',fmt(p['95'],2))+metric('PROBABILITY OF LOSS',pct(d.probability_of_loss_pct))+metric('PATHS',fmt(d.paths,0))+metric('HORIZON',fmt(d.steps,0)+' periods')+'<div class="kp-wide kp-muted">Bootstrap scenario from historical returns. Not a forecast or guarantee.</div>';
  }).catch(function(e){error('kpRiskError',e.message);}).finally(function(){$('kpRunMonte').disabled=false;});
 }
-function health(){api('/health').then(function(d){status(d.ok?'API ONLINE · READ ONLY':'API ERROR');}).catch(function(){status('API NOT CONNECTED');});}
+function health(){var field=$('kpApiBase');if(field&&!field.value)field.value=apiBase;api('/health').then(function(d){status(d.ok?'API ONLINE · READ ONLY':'API ERROR');}).catch(function(){status('API NOT CONNECTED');});}
 function bind(){
  document.querySelectorAll('#viewPro [data-kp-pane]').forEach(function(b){b.addEventListener('click',function(){activePane(b.dataset.kpPane);});});
  $('kpScan').addEventListener('click',scan);
@@ -103,6 +103,7 @@ function bind(){
  $('kpRunRisk').addEventListener('click',runRisk);
  $('kpRunMonte').addEventListener('click',runMonte);
  $('kpExchange').addEventListener('change',function(){status('EXCHANGE CHANGED · REFRESH DATA');});
+ $('kpSaveApi').addEventListener('click',function(){var v=$('kpApiBase').value.trim().replace(/\\/$/,'');if(!/^https?:\\/\\//i.test(v)){status('ENTER A VALID API URL');return;}apiBase=v;localStorage.setItem(API_KEY,apiBase);health();});
  if(window.ResizeObserver&&$('kpChart')){var observer=new ResizeObserver(function(){if(chart&&$('kpChart').clientWidth)chart.applyOptions({width:$('kpChart').clientWidth,height:$('kpChart').clientHeight});});observer.observe($('kpChart'));}
  var script=document.createElement('script');
  script.src='https://unpkg.com/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';
