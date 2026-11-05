@@ -103,7 +103,7 @@ function bind(){
  $('kpRunRisk').addEventListener('click',runRisk);
  $('kpRunMonte').addEventListener('click',runMonte);
  $('kpExchange').addEventListener('change',function(){status('EXCHANGE CHANGED · REFRESH DATA');});
- $('kpSaveApi').addEventListener('click',function(){var v=$('kpApiBase').value.trim().replace(/\\/$/,'');if(!/^https?:\\/\\//i.test(v)){status('ENTER A VALID API URL');return;}apiBase=v;localStorage.setItem(API_KEY,apiBase);health();});
+ $('kpSaveApi').addEventListener('click',function(){var v=$('kpApiBase').value.trim().replace(/\/$/,'');if(!/^https?:\/\//i.test(v)){status('ENTER A VALID API URL');return;}apiBase=v;localStorage.setItem(API_KEY,apiBase);health();});
  if(window.ResizeObserver&&$('kpChart')){var observer=new ResizeObserver(function(){if(chart&&$('kpChart').clientWidth)chart.applyOptions({width:$('kpChart').clientWidth,height:$('kpChart').clientHeight});});observer.observe($('kpChart'));}
  var script=document.createElement('script');
  script.src='https://unpkg.com/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';
