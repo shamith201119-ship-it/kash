@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: kashtrader-pro-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: KASH_ALLOWED_ORIGINS
+        value: https://kashtrader.vercel.app
