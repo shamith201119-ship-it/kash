@@ -984,7 +984,11 @@
     <div class="kp-wrap">
       <div class="kp-head">
         <div><div class="kp-kicker">KASH / PRO INTELLIGENCE</div><div class="kp-title">One market. More context.</div><div class="kp-desc">Cross-exchange discovery, liquidity snapshots and transparent strategy research — alongside your existing Kash signal engine.</div></div>
-        <div class="kp-status" id="kpStatus">API NOT CONNECTED</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;align-items:center;max-width:420px">
+          <input id="kpApiBase" aria-label="Kash Pro API URL" placeholder="https://your-kash-api.example.com" style="min-width:190px;max-width:270px;border:1px solid rgba(0,230,150,.2);border-radius:6px;background:#071017;color:#e4fbf1;padding:9px 10px;font:10px 'JetBrains Mono',monospace">
+          <button class="kp-button" id="kpSaveApi" type="button">CONNECT API</button>
+          <div class="kp-status" id="kpStatus">API NOT CONNECTED</div>
+        </div>
       </div>
       <div class="kp-tabs">
         <button class="kp-subtab active" data-kp-pane="markets">MARKET SCANNER</button>
